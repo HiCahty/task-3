@@ -2,8 +2,6 @@ window.onload=function  () {
 	// body...
 	addLoadEvent(getWH());
 	addLoadEvent(scrollslide());
-
-		
 }
 
 function addLoadEvent(func){
@@ -33,6 +31,8 @@ function getWH(){
   menuL.style.width=document.documentElement.clientWidth-584+'px';
 }
 
+
+
 //滚动触发幻灯片
 function scrollslide(){
 	window.index=0;
@@ -48,16 +48,19 @@ function scrollslide(){
   var introRight=document.getElementById('introductionRight');
   var imgInt=introLeft.getElementsByTagName('div');
   var textop=introRight.getElementsByTagName('div');
+  var button2=document.getElementById('introbutton').getElementsByTagName('a');
   //------------------3----------------3----------------3-----------------
   var groupsList=document.getElementById('groupsList');
   var groupA=groupsList.getElementsByTagName('a');
   var groupsright=document.getElementById('groupsright');
   var Gdiv=groupsright.getElementsByTagName('div');
+  var button3=document.getElementById('groupsList').getElementsByTagName('a');
   //---------4-------------------4------------------4----------------------
   var eventList=document.getElementById('eventList');
   var eventA=eventList.getElementsByTagName('a');
   var events=document.getElementById('greatEvent');
   var round=events.getElementsByTagName('div');
+   round[0].style.top=parseInt(0.45*move)+'px';
   var greatEventmain=document.getElementById('greatEventmain');
   var imgcontent=greatEventmain.getElementsByTagName('div');
   var imgLR=imgcontent[4].getElementsByTagName('div');
@@ -86,8 +89,79 @@ function scrollslide(){
   var aboutA=aboutList.getElementsByTagName('a');
   var aboutW=document.getElementById('aboutW');
    
-  //-----------------------------------------------------------------------------------------------
+  //--------------------------------------导航条切换---------------------------------------------------------
+  var myindex=1;
+  var temp=1;
+  var flag=new Array(5);
+  var move=document.documentElement.clientHeight;
+  var section=document.getElementsByTagName('section');
+  var menuR=document.getElementById('menuRight');
+  var menuNav=menuR.getElementsByTagName('nav');
+  //----------------------------------------导航条切换------------------------------------------------------
+  for(var i=0;i<6;i++){
+    menuNav[i].onclick=function(){
+      flag[temp-1]=index;//加一个标记，使每个页面滚动到一半在翻到别的页面又翻回来时不乱
+      var Mindex=parseInt(this.getAttribute('index'));
+      temp=Mindex;
+      switch(Mindex){
+        case 1:
+          index=0;
+          break;
+        case 2:
+          if(flag[1])
+            index=flag[1];
+          else index=1;
+          active(section[1]);
+          break;
+        case 3:
+          if(flag[2])
+            index=flag[2];
+          else index=3;
+          active(section[2]);
+          break;
+        case 4:
+          if(flag[3])
+            index=flag[3];
+          else index=9;
+          active(section[3])
+          break;
+        case 5:
+          if(flag[4])
+            index=flag[4];
+          else index=18;
+          active(section[4]);
+          break;
+        case 6:
+          if(flag[5]) index=flag[5];
+          else index=28;
+          active(section[5]);
+          break;
+      }
+      if(Mindex>myindex){
+        for(j=0;j<Mindex-2;j++){
+          section[j].style.top=-move+'px';
+        }
+        animove(section[Mindex-2],{top:-move},10);
+
+      }
+      else if(Mindex<myindex){
+        for(j=myindex-1;j>Mindex;j--){
+          section[j-1].style.top=0;
+        }
+        animove(section[Mindex-1],{top:0},10);
+      }
+     
+      myindex=Mindex;
+    }
+  }
+  //按钮切换
+
+
+
+
+  //-------------------------------------------------------------------------------------------
 	var scrollFunc=function(e){ 
+    console.log(index);
 		e=e || window.event; 
     if(e.wheelDelta){//IE/Opera/Chrome 
       if(e.wheelDelta>0){//向上滚动事件
@@ -286,7 +360,6 @@ function scrollslide(){
           index--;
     	}//向上滚动事件结束
 
-
     	if(e.wheelDelta<0) {//向下滚动事件
           index++;
     		  if(index==1){
@@ -297,7 +370,8 @@ function scrollslide(){
     					  }
     					  else section[0].style.top=section[0].offsetTop-20+'px';
       			},30);
-            animove(textop[0],{opacity:100},1);
+            active(section[1]);
+            if(flag[1]) index=flag[1];//用flag记忆当前页面存在的位置
     		  }//第一个幻灯片结束
     			else if(index==3){
     				var time=setInterval(function(){
@@ -305,9 +379,10 @@ function scrollslide(){
     						clearInterval(time);
     						section[1].style.top=-move+'px';
     					}
-    					else section[1].style.top=section[1].offsetTop-20+'px';
+    					 else section[1].style.top=section[1].offsetTop-20+'px';
       				},30);
-            animove(Gdiv[0],{opacity:100},40);
+            active(section[2]);
+            if(flag[2]) index=flag[2];
     			}//第二个幻灯片结束
     			else if(index==9){
     				var time=setInterval(function(){
@@ -317,8 +392,8 @@ function scrollslide(){
     					  }
     					  else section[2].style.top=section[2].offsetTop-20+'px';
       			},30);
-            round[0].style.top=parseInt(0.45*move)+'px';
-            imgcontent[0].style.opacity=1;
+            active(section[3]);
+            if(flag[3]) index=flag[3];
     			}//第三个幻灯片结束
     			else if (index==18){
     				var time=setInterval(function(){
@@ -328,6 +403,8 @@ function scrollslide(){
     					}
     					else section[3].style.top=section[3].offsetTop-20+'px';
       				},30);
+             active(section[4]);
+            if(flag[4]) index=flag[4];
     			}//第四个幻灯片结束
     			else if(index==28){
     				var time=setInterval(function(){
@@ -335,31 +412,17 @@ function scrollslide(){
     						clearInterval(time);
     						section[4].style.top=-move+'px';
     					}
-    					else section[4].style.top=section[4].offsetTop-20+'px';
+    					 else section[4].style.top=section[4].offsetTop-20+'px';
       				},30);
+            active(section[5]);
+            if(flag[5]) index=flag[5];
     			}//第五个个幻灯片结束
           //-------------------------------------------大的页面切换完-------------------
           else if(index==2){//introduction-interval
-            imgInt[1].style.transform="rotateX(180deg)";
-            setTimeout(function(){
-              imgInt[3].style.transform="rotateX(180deg)";
-            },100)
-            setTimeout(function(){
-              imgInt[5].style.transform="rotateX(180deg)";
-            },200)
-            animove(textop[0],{opacity:0},10,function(){
-              animove(textop[1],{opacity:100},10);
-            });
-            onbutton(introB,2);
+            introIN();
           }//introduction-interval完
     			else if(index>=4&&index<=8){//groups轮播
-    				var target=-move*(index-3);
-    				animove(imgslide,{top:target},40);
-            if(Gdiv[index-3].getElementsByTagName('div')){
-              animove(Gdiv[(index-4)*2],{opacity:0},40);
-              animove(Gdiv[(index-3)*2],{opacity:100},40);   
-            }
-            onbutton(groupA,index-2);
+    				groupIN();
     			}//groups轮播结束
           else if(index>=10&&index<=17){//greatEvent轮播
             animove(round[index-10],{top:-200},20,function(){
@@ -484,27 +547,80 @@ function scrollslide(){
         }//向下滚动事件结束
     	}
   	}
-  		
-      /*考虑到其它地方和chrome一样，此处省略
-      else if(e.detail){//Firefox 
-    		if(e.detail==-3) { //向上滚动事件<br> 
-      			
-    		}
-    		else {//向下滚动事件<br>
-      			
-      		} 
-  		} 
-      */
+
  	
 	//添加事件
-  
-  
-	  if(document.addEventListener){ 
+    if(document.addEventListener){ 
   		//adding the event listerner for Mozilla
    		document.addEventListener("DOMMouseScroll" ,scrollFunc, false);
 	  }
    	 //IE/Opera/Chrome 
-   		window.onmousewheel=scrollFunc;//document.onmousewheel的区别
+   		window.onmousewheel=scrollFunc;//document.onmousewheel的区别 
+
+
+
+   //--------------------按钮点击-------------      
+    button2[1].onclick=function(){
+      introIN();
+      index=2;
+    }
+    for(var i=0;i<button3.length;i++){
+      button3[i].i=i+1;
+      button3[i].onclick=function(){
+        index=2+this.i;
+        if(index==3){
+          var target=-move*(index-3);
+          animove(imgslide,{top:target},40);
+          for(var i=0;i<6;i++){
+              Gdiv[i*2].style.opacity=0;
+            }
+          animove(Gdiv[(index-3)*2],{opacity:100},40);  
+          onbutton(groupA,index-3);
+        }
+        else{
+          var target=-move*(index-3);
+          animove(imgslide,{top:target},40);
+          if(Gdiv[index-3].getElementsByTagName('div')){
+            animove(Gdiv[(index-4)*2],{opacity:0},40);
+            for(var i=0;i<6;i++){
+              Gdiv[i*2].style.opacity=0;
+            }
+            animove(Gdiv[(index-3)*2],{opacity:100},40);   
+          }
+          onbutton(groupA,index-2);
+        }
+        
+
+      }
+
+    }
+   //-----------------按钮点击完------------------
+    function introIN(){
+      imgInt[1].style.transform="rotateX(180deg)";
+            setTimeout(function(){
+              imgInt[3].style.transform="rotateX(180deg)";
+            },100)
+            setTimeout(function(){
+              imgInt[5].style.transform="rotateX(180deg)";
+            },200)
+            animove(textop[0],{opacity:0},10,function(){
+              animove(textop[1],{opacity:100},10);
+            });
+            onbutton(introB,2);
+    }
+    function groupIN(){
+      var target=-move*(index-3);
+        animove(imgslide,{top:target},40);
+          if(Gdiv[index-3].getElementsByTagName('div')){
+            animove(Gdiv[(index-4)*2],{opacity:0},40);
+            for(var i=0;i<6;i++){
+              Gdiv[i*2].style.opacity=0;
+            }
+            animove(Gdiv[(index-3)*2],{opacity:100},40);   
+          }
+      onbutton(groupA,index-2);
+    }
+
 }
 
 
@@ -567,3 +683,14 @@ function hide(){
     globe.style.display="none";
   }
 }
+
+
+function active(This){
+  var section=document.getElementsByTagName('section');
+  for(var i=0;i<6;i++){
+    section[i].setAttribute('active','0');
+    This.setAttribute("active","1");
+  }
+}
+
+
