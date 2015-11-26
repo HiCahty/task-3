@@ -36,6 +36,7 @@ function getWH(){
 //滚动触发幻灯片
 function scrollslide(){
 	window.index=0;
+  window.nu=1;
 	var move=document.documentElement.clientHeight;
   var move2=document.documentElement.clientWidth;
   var m=document.documentElement.clientHeight;
@@ -88,7 +89,6 @@ function scrollslide(){
   var aboutList=document.getElementById('aboutList');
   var aboutA=aboutList.getElementsByTagName('a');
   var aboutW=document.getElementById('aboutW');
-   
   //--------------------------------------导航条切换---------------------------------------------------------
   var myindex=1;
   var temp=1;
@@ -161,29 +161,34 @@ function scrollslide(){
 
   //-------------------------------------------------------------------------------------------
 	var scrollFunc=function(e){ 
-    console.log(index);
 		e=e || window.event; 
+    console.log(nu);
     if(e.wheelDelta){//IE/Opera/Chrome 
       if(e.wheelDelta>0){//向上滚动事件
-          if(index==28){
-            var time=setInterval(function(){
-              if(section[4].offsetTop>=0){
-                clearInterval(time);
-                section[4].style.top=0;
-              }
-              else section[4].style.top=section[4].offsetTop+20+'px';
-            },30);
-          }
-          else if(index==18){
+        if(index==28&&nu==1){
+          nu=0;
+          var time=setInterval(function(){
+            if(section[4].offsetTop>=0){
+              clearInterval(time);
+              section[4].style.top=0;
+            }
+            else section[4].style.top=section[4].offsetTop+20+'px';
+          },30);
+          nu=1;
+        }
+        else if(index==18&&nu==1){
+            nu=0;
             var time=setInterval(function(){
                 if(section[3].offsetTop>=0){
-                clearInterval(time);
-                section[3].style.top=0;
-              }
-              else section[3].style.top=section[3].offsetTop+20+'px';
-              },30);
+                  clearInterval(time);
+                  section[3].style.top=0;
+                }
+                else section[3].style.top=section[3].offsetTop+20+'px';
+            },30);
+             nu=1;
           }
-          else if(index==9){
+        else if(index==9&&nu==1){
+             nu=0;
             var time=setInterval(function(){
                 if(section[2].offsetTop>=0){
                   clearInterval(time);
@@ -191,35 +196,41 @@ function scrollslide(){
                 }
                 else section[2].style.top=section[2].offsetTop+20+'px';
             },30);
-            //round[0].style.top=parseInt(0.45*move)+'px';
-            //imgcontent[0].style.opacity=1;
-          }//第三个幻灯片结束
-          else if(index==3){
+             nu=1;
+          }
+          else if(index==3&&nu==1){
+             nu=0;
+            // var promise = new promise();
             var time=setInterval(function(){
                 if(section[1].offsetTop>=0){
-                clearInterval(time);
-                section[1].style.top=0;
-              }
-              else section[1].style.top=section[1].offsetTop+20+'px';
-              },30);
+                  clearInterval(time);
+                  section[1].style.top=0;
+                }
+                else section[1].style.top=section[1].offsetTop+20+'px';
+            },30);
+
+            nu=1;
             //animove(Gdiv[0],{opacity:100},40);
           }//第二个幻灯片结束
-          else if(index==1){
+           else if(index==1&&nu==1){
+             nu=0;
             var time=setInterval(function(){
                 if(section[0].offsetTop>=0){
                   clearInterval(time);
                   section[0].style.top=0;
+                  nu=1;
                 }
                 else section[0].style.top=section[0].offsetTop+20+'px';
             },30);
             //animove(textop[0],{opacity:100},1);
           }//第一个幻灯片结束
-          //------------------------------------section-----------------end--------------------
-          else if(index==29){
+          else if(index==29&&nu==1){
+            nu=0;
             onbutton(aboutA,index-28);
-            animove(aboutW,{top:0},35);
+            animove(aboutW,{top:0},20);
+            nu=1;
           }
-          else if(index>=19&&index<=27){
+          else if(index>=19&&index<=27&&nu==1){//work
             animove(gallery,{left:(19-index)*500},40);
             setTimeout(function(){
                animove(worksList,{left:(18-index)*move2},40);
@@ -246,25 +257,40 @@ function scrollslide(){
             else if(index==27){
                leau.style.width=161+'px';
             }
-          }
-          else if(index>=10&&index<=17){//greatEvent轮播    这一段简直有毒！
-           //animove(round[index-9],{top:move},20,function(){
-             //   animove(round[index-10],{top:parseInt(0.45*move)},20);
-            //});
-            onbutton(eventA,index-9);/*
+          }//work结束
+          
+          else if(index>=10&&index<=17&&nu==1){//greatEvent轮播
+            
             if(index>=10&&index<=12){
+              nu=0;
+              animove(round[index-9],{top:move},20,function(){
+                animove(round[index-10],{top:parseInt(0.45*move)},20);
+              });
+              onbutton(eventA,index-9);
               animove(imgcontent[index-9],{opacity:0},20,function(){
                 animove(imgcontent[index-10],{opacity:100},20);
               });
+              nu=1;
             }
-            if(index==13){ 
+            if(index==13){
+              nu=0;
+            animove(round[index-9],{top:move},20,function(){
+              animove(round[index-10],{top:parseInt(0.45*move)},20);
+            });
+            onbutton(eventA,index-9); 
               animove(imgLR[0],{opacity:0},20,function(){
                 animove(imgLR[1],{opacity:0},20,function(){
                   animove(imgcontent[index-10],{opacity:100},30);
                 })
               })
+              nu=1;
             }
             else if(index==14){
+              nu=0;
+              animove(round[index-9],{top:move},20,function(){
+              animove(round[index-10],{top:parseInt(0.45*move)},20);
+            });
+            onbutton(eventA,index-9);
               animove(imgLR2[0],{opacity:0},10,function(){
                 animove(imgLR2[1],{opacity:0},10,function(){
                   animove(imgLR[0],{opacity:100},30,function(){
@@ -272,8 +298,14 @@ function scrollslide(){
                   })
                 })
               })
+              nu=1;
             }
-            else if(index==15){
+            else if(index==15&&nu==1){
+              nu=0;
+              animove(round[index-9],{top:move},20,function(){
+              animove(round[index-10],{top:parseInt(0.45*move)},20);
+            });
+            onbutton(eventA,index-9);
                animove(imgnum[0],{opacity:0},10,function(){
                 animove(imgnum[2],{opacity:0},10,function(){
                   animove(imgnum[4],{opacity:0},5,function(){
@@ -295,8 +327,14 @@ function scrollslide(){
                   })
                 })
               })
+               nu=1;
             }
-            else if(index==16){
+            else if(index==16&&nu==1){
+              nu=0;
+              animove(round[index-9],{top:move},20,function(){
+              animove(round[index-10],{top:parseInt(0.45*move)},20);
+            });
+            onbutton(eventA,index-9);
               animove(imgLRM[0],{opacity:0},5,function(){
                 animove(imgLRM[2],{opacity:0},5,function(){
                   animove(imgLRM[4],{opacity:0},5,function(){
@@ -320,8 +358,14 @@ function scrollslide(){
                   })
                 })
               })
+              nu=1;
             }
-            else if(index==17){
+            else if(index==17&&nu==1){
+              nu=0;
+              animove(round[index-9],{top:move},20,function(){
+              animove(round[index-10],{top:parseInt(0.45*move)},20);
+            });
+            onbutton(eventA,index-9);
               animove(imgLR3[0],{opacity:0},10,function(){
                 animove(imgLR3[1],{opacity:0},10,function(){
                   animove(imgLRM[0],{opacity:100},30,function(){
@@ -331,19 +375,15 @@ function scrollslide(){
                   });
                 })
               })
-            }//index==17  */
+              nu=1;
+            }//index==17
           }//greatEvent轮播结束
-         
-          else if(index>=4&&index<=8){
-            var target=move*(4-index);
-            animove(imgslide,{top:target},40);
-            if(Gdiv[index-3].getElementsByTagName('div')){
-              animove(Gdiv[(index-3)*2],{opacity:0},40);
-              animove(Gdiv[(index-4)*2],{opacity:100},40);   
-            }
-            onbutton(groupA,index-3);
+          else if(index>=4&&index<=8&&nu==1){
+            nu=0;
+            groupINup();
           }//groups轮播结束
-          else if(index==2){
+          else if(index==2&&nu==1){
+            nu=0;
             imgInt[1].style.transform="rotateX(360deg)";
             setTimeout(function(){
               imgInt[3].style.transform="rotateX(360deg)";
@@ -355,47 +395,63 @@ function scrollslide(){
               animove(textop[0],{opacity:100},10);
             });
             onbutton(introB,1);
+            nu=1;
           }
-          else if(index<=0) index=1;
+          else if(index<=0&&nu==1) {index=1;}
+        if(nu==1){
           index--;
-    	}//向上滚动事件结束
-
+          console.log(index);
+        }
+        else{
+          console.log(nu);
+        }
+      }
     	if(e.wheelDelta<0) {//向下滚动事件
-          index++;
-    		  if(index==1){
+          if(nu==1){index++;}
+    		  if(index==1&&nu==1){
+            nu=0;
     				var time=setInterval(function(){
       					if(section[0].offsetTop<=-move){
     						  clearInterval(time);
+                  nu=1;
     						  section[0].style.top=-move+'px';
     					  }
     					  else section[0].style.top=section[0].offsetTop-20+'px';
       			},30);
             active(section[1]);
             if(flag[1]) index=flag[1];//用flag记忆当前页面存在的位置
+            
     		  }//第一个幻灯片结束
-    			else if(index==3){
+    			else if(index==3&&nu==1){
+            nu=0;
     				var time=setInterval(function(){
       					if(section[1].offsetTop<=-move){
     						clearInterval(time);
     						section[1].style.top=-move+'px';
+                   nu=1;
     					}
     					 else section[1].style.top=section[1].offsetTop-20+'px';
       				},30);
             active(section[2]);
             if(flag[2]) index=flag[2];
+             
     			}//第二个幻灯片结束
-    			else if(index==9){
+    			else if(index==9&&nu==1){
+            nu=0;
     				var time=setInterval(function(){
       					if(section[2].offsetTop<=-move){
     						  clearInterval(time);
+                  nu=1;
     						  section[2].style.top=-move+'px';
     					  }
     					  else section[2].style.top=section[2].offsetTop-20+'px';
       			},30);
             active(section[3]);
             if(flag[3]) index=flag[3];
+            
     			}//第三个幻灯片结束
-    			else if (index==18){
+    			else if (index==18&&nu==1){
+            nu=0;
     				var time=setInterval(function(){
       					if(section[3].offsetTop<=-move){
     						clearInterval(time);
@@ -405,8 +461,10 @@ function scrollslide(){
       				},30);
              active(section[4]);
             if(flag[4]) index=flag[4];
+             nu=1;
     			}//第四个幻灯片结束
-    			else if(index==28){
+    			else if(index==28&&nu==1){
+            nu=0;
     				var time=setInterval(function(){
       					if(section[4].offsetTop<=-move){
     						clearInterval(time);
@@ -416,41 +474,74 @@ function scrollslide(){
       				},30);
             active(section[5]);
             if(flag[5]) index=flag[5];
+             nu=1;
     			}//第五个个幻灯片结束
           //-------------------------------------------大的页面切换完-------------------
-          else if(index==2){//introduction-interval
+          else if(index==2&&nu==1){//introduction-interval
+            nu=0;
             introIN();
+            
           }//introduction-interval完
-    			else if(index>=4&&index<=8){//groups轮播
+    			else if(index>=4&&index<=8&&nu==1){//groups轮播
+            nu=0;
     				groupIN();
     			}//groups轮播结束
-          else if(index>=10&&index<=17){//greatEvent轮播
-            animove(round[index-10],{top:-200},20,function(){
-               animove(round[index-9],{top:parseInt(0.45*move)},20);
-            });
-            onbutton(eventA,index-8);
-            if(index>=10&&index<=12){
+          else if(index>=10&&index<=17&&nu==1){//greatEvent轮播
+      
+            
+         
+            if(index>=10&&index<=12&&nu==1){
+              nu=0;
+              onbutton(eventA,index-8);
+              animove(round[index-10],{top:-200},20,function(){
+               animove(round[index-9],{top:parseInt(0.45*move)},20,function(){
+               });   
+              });
               animove(imgcontent[index-10],{opacity:0},20,function(){
-                animove(imgcontent[index-9],{opacity:100},20);
+                animove(imgcontent[index-9],{opacity:100},20,function(){
+                  nu=1;
+                });
               });
             }
-            else if(index==13){ 
-              animove(imgcontent[index-10],{opacity:0},20,function(){
+            else if((index==13)&&nu==1){ 
+              nu=0;
+              onbutton(eventA,index-8);
+              animove(round[index-10],{top:-200},20,function(){
+               animove(round[index-9],{top:parseInt(0.45*move)},20,function(){
+               });   
+              });
+              animove(imgcontent[index-10],{opacity:0},10,function(){
                 animove(imgLR[0],{opacity:100},30,function(){
-                  animove(imgLR[1],{opacity:100},30);
+                  animove(imgLR[1],{opacity:100},30,function(){
+                    nu=1;
+                  });
                 })
               })
             }
-            else if(index==14){
+            else if((index==14)&&nu==1){
+              nu=0;
+              onbutton(eventA,index-8);
+              animove(round[index-10],{top:-200},20,function(){
+               animove(round[index-9],{top:parseInt(0.45*move)},20,function(){
+               });   
+              });
               animove(imgLR[0],{opacity:0},10,function(){
                 animove(imgLR[1],{opacity:0},10,function(){
                   animove(imgLR2[0],{opacity:100},30,function(){
-                    animove(imgLR2[1],{opacity:100},30);
+                    animove(imgLR2[1],{opacity:100},30,function(){
+                      nu=1;
+                    });
                   })
                 })
               })
             }
-            else if(index==15){
+            else if(index==15&&nu==1){
+               nu=0;
+              onbutton(eventA,index-8);
+              animove(round[index-10],{top:-200},20,function(){
+               animove(round[index-9],{top:parseInt(0.45*move)},20,function(){
+               });   
+              });
                animove(imgLR2[0],{opacity:0},10,function(){
                 animove(imgLR2[1],{opacity:0},10,function(){
                   animove(imgnum[0],{opacity:100},5,function(){
@@ -461,7 +552,9 @@ function scrollslide(){
                             animove(imgnum[14],{opacity:100},5,function(){
                               animove(imgnum[12],{opacity:100},5,function(){
                                 animove(imgnum[6],{opacity:100},5,function(){
-                                  animove(imgnum[8],{opacity:100},5);
+                                  animove(imgnum[8],{opacity:100},5,function(){
+                                    nu=1;
+                                  });
                                 })
                               })
                             })
@@ -472,8 +565,15 @@ function scrollslide(){
                   })
                 })
               })
+             
             }
-            else if(index==16){
+            else if(index==16&&nu==1){
+               nu=0;
+              onbutton(eventA,index-8);
+              animove(round[index-10],{top:-200},20,function(){
+               animove(round[index-9],{top:parseInt(0.45*move)},20,function(){
+               });   
+              });
               animove(imgnum[0],{opacity:0},5,function(){
                 animove(imgnum[2],{opacity:0},5,function(){
                   animove(imgnum[4],{opacity:0},5,function(){
@@ -485,7 +585,9 @@ function scrollslide(){
                               animove(imgnum[8],{opacity:0},5,function(){
                                 animove(imgLRM[0],{opacity:100},10,function(){
                                   animove(imgLRM[2],{opacity:100},10,function(){
-                                    animove(imgLRM[4],{opacity:100},10);
+                                    animove(imgLRM[4],{opacity:100},10,function(){
+                                      nu=1;
+                                    });
                                   })
                                 })
                               });
@@ -498,12 +600,20 @@ function scrollslide(){
                 })
               })
             }
-            else if(index==17){
+            else if(index==17&&nu==1){
+               nu=0;
+              onbutton(eventA,index-8);
+              animove(round[index-10],{top:-200},20,function(){
+               animove(round[index-9],{top:parseInt(0.45*move)},20,function(){
+               });   
+              });
               animove(imgLRM[0],{opacity:0},10,function(){
                 animove(imgLRM[2],{opacity:0},10,function(){
                   animove(imgLRM[4],{opacity:0},10,function(){
                     animove(imgLR3[0],{opacity:100},30,function(){
-                      animove(imgLR3[1],{opacity:100},30)
+                      animove(imgLR3[1],{opacity:100},30,function(){
+                        nu=1;
+                      })
                     })
                   });
                 })
@@ -539,13 +649,17 @@ function scrollslide(){
                leau.style.width=174+'px';
             }
           }
-          else if(index==29){
+          else if(index==29&&nu==1){
+            nu=0;
             onbutton(aboutA,index-27);
-            animove(aboutW,{top:-move},35);
+            animove(aboutW,{top:-move},35,function(){
+              nu=1;
+            });
           }
           else if(index>29) index=29;
         }//向下滚动事件结束
     	}
+      console.log(index);
   	}
 
  	
@@ -558,7 +672,13 @@ function scrollslide(){
    		window.onmousewheel=scrollFunc;//document.onmousewheel的区别 
 
 
-
+// var scroll={
+//   header:document.getElementById("ami"),
+//   scrollDown:function(){
+//     this.header.top("200");
+//   }
+// }
+// scroll.scrollDown();
    //--------------------按钮点击-------------      
     button2[1].onclick=function(){
       introIN();
@@ -595,6 +715,7 @@ function scrollslide(){
 
     }
    //-----------------按钮点击完------------------
+
     function introIN(){
       imgInt[1].style.transform="rotateX(180deg)";
             setTimeout(function(){
@@ -607,6 +728,20 @@ function scrollslide(){
               animove(textop[1],{opacity:100},10);
             });
             onbutton(introB,2);
+            nu=1;
+    }
+     function groupINup(){
+      var target=-move*(index-3);
+        animove(imgslide,{top:target},40);
+          if(Gdiv[index-3].getElementsByTagName('div')){
+            animove(Gdiv[(index-4)*2],{opacity:0},40);
+            for(var i=0;i<6;i++){
+              Gdiv[i*2].style.opacity=0;
+            }
+            animove(Gdiv[(index-4)*2],{opacity:100},40);   
+          }
+        onbutton(groupA,index-2);
+        nu=1;
     }
     function groupIN(){
       var target=-move*(index-3);
@@ -619,6 +754,7 @@ function scrollslide(){
             animove(Gdiv[(index-3)*2],{opacity:100},40);   
           }
       onbutton(groupA,index-2);
+       nu=1;
     }
 
 }

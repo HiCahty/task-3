@@ -493,14 +493,14 @@
 				<div class="join about">
 					<form action="#" method="post">
 						<div class="form-left">
-							<div id="labelBox">
-								<label for="name">姓名</label>
-								<label>性别</label>
-								<label>所在校区</label>
-								<label for="grade">院系/专业/年级</label>
-								<label for="phoneNum">联系电话</label>
-								<label for="reserveNum">备用电话</label>
-								<label for="group">报名组别</label>
+							<div id="spanBox">
+								<span for="name">姓名</span>
+								<span>性别</span>
+								<span>所在校区</span>
+								<span for="grade">院系/专业/年级</span>
+								<span for="phoneNum">联系电话</span>
+								<span for="reserveNum">备用电话</span>
+								<span for="group">报名组别</span>
 							</div>
 							<div id="inputBox">
 								<input type="text" id="name" name="name">
@@ -510,18 +510,18 @@
 									<label><input type="radio" name="gender" value="female" >
 									<span class="radio"></span>女</label>
 								</div>
-							<div>
-								<label><input type="radio" name="location" value="yy" checked="checked" >
+								<div>
+									<label><input type="radio" name="location" value="yy" checked="checked" >
 									<span class="radio checked"></span>韵苑</label>
-								<label>
-									<input type="radio" name="location" value="qy"><span class="radio"></span>沁苑
-								</label>
-								<label>
-									<input type="radio" name="location" value="zs" >
-									<span class="radio"></span>
-									紫菘
-								</label>
-							</div>
+									<label>
+										<input type="radio" name="location" value="qy"><span class="radio"></span>沁苑
+									</label>
+									<label>
+										<input type="radio" name="location" value="zs" >
+										<span class="radio"></span>
+										紫菘
+									</label>
+								</div>
 							<input type="text" name="grade" id="grade" placeholder="16字以内">
 							<input type="text" name="phoneNum" id="phoneNum">
 							<input type="text" name="reserveNum" id="reserveNum" placeholder=" 如室友电话">
@@ -562,7 +562,7 @@
 						</div>
 						<div class="form-right">
 							<label>个人简介</label>
-							<textarea name="" placeholder="自我介绍"></textarea>
+							<textarea name="" placeholder="自我介绍" rows="8" cols="20"></textarea>
 							<input type="submit" value="提&nbsp&nbsp交" class="submit" id="submiter"/>
 						</div>
 					</form>

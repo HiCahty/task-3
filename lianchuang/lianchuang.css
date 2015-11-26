@@ -648,7 +648,7 @@ width: 30px;height: 25px}
     bottom: 0;
     opacity: 0;
 }
-.img-content-one{opacity: 1!important;}
+.greatEvent-main .img-content-one{opacity: 1;}
 .img-content img{
     margin-top: 195px;
     width: 450px;
@@ -1009,8 +1009,8 @@ width: 30px;height: 25px}
     margin-bottom: 25px;
 }
 .form-left{float: left;width: 50%;}
-#labelBox{float: left;width: 30%; margin-left: -20px;}
-#labelBox label{
+#spanBox{float: left;width: 30%; margin-left: -20px;}
+#spanBox span{
     display: block;
     margin-bottom: 37px;
     text-align: right;
