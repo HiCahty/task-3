@@ -92,7 +92,9 @@ function scrollslide(){
   //--------------------------------------导航条切换---------------------------------------------------------
   var myindex=1;
   var temp=1;
-  var flag=new Array(5);
+  var flag=new Array(6);
+  var flagup=new Array(5);
+  flagup[0]=2;flagup[2]=4;flagup[3]=10;flagup[4]=19;flagup[5]=29;
   var move=document.documentElement.clientHeight;
   var section=document.getElementsByTagName('section');
   var menuR=document.getElementById('menuRight');
@@ -101,6 +103,7 @@ function scrollslide(){
   for(var i=0;i<6;i++){
     menuNav[i].onclick=function(){
       flag[temp-1]=index;//加一个标记，使每个页面滚动到一半在翻到别的页面又翻回来时不乱
+       flagup[temp-1]=index;
       var Mindex=parseInt(this.getAttribute('index'));
       temp=Mindex;
       switch(Mindex){
@@ -162,7 +165,7 @@ function scrollslide(){
   //-------------------------------------------------------------------------------------------
 	var scrollFunc=function(e){ 
 		e=e || window.event; 
-    console.log(nu);
+    console.log(index);
     if(e.wheelDelta){//IE/Opera/Chrome 
       if(e.wheelDelta>0){//向上滚动事件
         if(index==28&&nu==1){
@@ -174,10 +177,12 @@ function scrollslide(){
             }
             else section[4].style.top=section[4].offsetTop+20+'px';
           },30);
+           if(flagup[4]) index=flagup[4];
+           else index=28;
           nu=1;
         }
         else if(index==18&&nu==1){
-            nu=0;
+            nu=0;      
             var time=setInterval(function(){
                 if(section[3].offsetTop>=0){
                   clearInterval(time);
@@ -185,6 +190,13 @@ function scrollslide(){
                 }
                 else section[3].style.top=section[3].offsetTop+20+'px';
             },30);
+            if(flagup[3]==10) {index=flagup[3];}
+            else{
+                index=18;
+               imgLR3[0].style.opacity=1;
+              imgLR3[1].style.opacity=1;
+            }
+        
              nu=1;
           }
         else if(index==9&&nu==1){
@@ -196,6 +208,8 @@ function scrollslide(){
                 }
                 else section[2].style.top=section[2].offsetTop+20+'px';
             },30);
+             if(flagup[2]) index=flagup[2];
+             else index=9;
              nu=1;
           }
           else if(index==3&&nu==1){
@@ -260,17 +274,47 @@ function scrollslide(){
           }//work结束
           
           else if(index>=10&&index<=17&&nu==1){//greatEvent轮播
+              imgcontent[0].style.opacity=0;
+            // if(index>=10&&index<=12){
+            //   nu=0;
+            //   animove(round[index-9],{top:move},20,function(){
+            //     animove(round[index-10],{top:parseInt(0.45*move)},20);
+            //   });
+            //   onbutton(eventA,index-9);
+            //   animove(imgcontent[index-9],{opacity:0},20,function(){
+            //     animove(imgcontent[index-10],{opacity:100},20);
+            //   });
+            //   nu=1;
+            // }
+            if(index==12){
+               animove(round[index-9],{top:move},20,function(){
+                 animove(round[index-10],{top:parseInt(0.45*move)},20);
+               });
+               onbutton(eventA,index-9);
+             imgcontent[3].style.opacity=0;
+             animove(imgcontent[index-10],{opacity:100},20);
+             
+               nu=1;
+            }
+            if(index==11){
+               animove(round[index-9],{top:move},20,function(){
+                 animove(round[index-10],{top:parseInt(0.45*move)},20);
+               });
+               onbutton(eventA,index-9);
+              imgcontent[2].style.opacity=0;
+             animove(imgcontent[index-10],{opacity:100},20);
             
-            if(index>=10&&index<=12){
-              nu=0;
-              animove(round[index-9],{top:move},20,function(){
-                animove(round[index-10],{top:parseInt(0.45*move)},20);
-              });
-              onbutton(eventA,index-9);
-              animove(imgcontent[index-9],{opacity:0},20,function(){
-                animove(imgcontent[index-10],{opacity:100},20);
-              });
-              nu=1;
+               nu=1;
+            }
+            if(index==10){
+               animove(round[index-9],{top:move},20,function(){
+                 animove(round[index-10],{top:parseInt(0.45*move)},20);
+               });
+               onbutton(eventA,index-9);
+               animove(imgcontent[1],{opacity:0},20,function(){
+             animove(imgcontent[index-10],{opacity:100},20);
+               });
+               nu=1;
             }
             if(index==13){
               nu=0;
@@ -403,7 +447,7 @@ function scrollslide(){
           console.log(index);
         }
         else{
-          console.log(nu);
+          console.log(nu+'!');
         }
       }
     	if(e.wheelDelta<0) {//向下滚动事件
@@ -448,10 +492,13 @@ function scrollslide(){
       			},30);
             active(section[3]);
             if(flag[3]) index=flag[3];
+            flagup[2]=9;
             
     			}//第三个幻灯片结束
     			else if (index==18&&nu==1){
             nu=0;
+            imgLR3[0].style.opacity=0;
+            imgLR3[1].style.opacity=0;
     				var time=setInterval(function(){
       					if(section[3].offsetTop<=-move){
     						clearInterval(time);
@@ -461,6 +508,7 @@ function scrollslide(){
       				},30);
              active(section[4]);
             if(flag[4]) index=flag[4];
+            flagup[3]=18;
              nu=1;
     			}//第四个幻灯片结束
     			else if(index==28&&nu==1){
@@ -474,6 +522,7 @@ function scrollslide(){
       				},30);
             active(section[5]);
             if(flag[5]) index=flag[5];
+            flagup[4]=28;
              nu=1;
     			}//第五个个幻灯片结束
           //-------------------------------------------大的页面切换完-------------------
@@ -659,7 +708,7 @@ function scrollslide(){
           else if(index>29) index=29;
         }//向下滚动事件结束
     	}
-      console.log(index);
+  
   	}
 
  	
@@ -760,7 +809,8 @@ function scrollslide(){
 }
 
 
-//动画函数
+
+// 动画函数
 function animove(obj,json,time,fn){
 	clearInterval(obj.timer);
 	obj.timer=setInterval(function(){
