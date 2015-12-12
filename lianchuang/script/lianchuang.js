@@ -85,6 +85,8 @@ function scrollslide(){
   var a=workstext.style.width=0.5*move*1856/1063+'px';
   var leau=document.getElementById('rouleau');
   var leauO=document.getElementById('leauO');
+  var button5=document.getElementById('workList').getElementsByTagName('a');
+  var worksName=document.getElementById('worksNameCon').getElementsByTagName('span');
   //------------6-----------------------6-------------------------6--------------
   var aboutList=document.getElementById('aboutList');
   var aboutA=aboutList.getElementsByTagName('a');
@@ -95,7 +97,7 @@ function scrollslide(){
   var flag=new Array(6);
   var flagup=new Array(5);
   flagup[0]=2;flagup[2]=4;flagup[3]=10;flagup[4]=19;flagup[5]=29;
-  var move=document.documentElement.clientHeight;
+  var move=document.documentElement.clientHeight;//move是页面高度
   var section=document.getElementsByTagName('section');
   var menuR=document.getElementById('menuRight');
   var menuNav=menuR.getElementsByTagName('nav');
@@ -674,6 +676,11 @@ function scrollslide(){
             setTimeout(function(){
                animove(worksList,{left:-(index-18)*move2},40);
             },35)
+            for(var i=0;i<worksName.length;i++){
+              if (worksName[i].className='worksName on') {};
+              worksName[i].className="worksName";
+            }
+              worksName[index-18].className="worksName on";
             onbutton(workA,index-17);
             //index一一取值只为改变卷帘位置
             if(index==21){
@@ -732,7 +739,7 @@ function scrollslide(){
     button2[1].onclick=function(){
       introIN();
       index=2;
-    }
+    }//intr按钮点击
     for(var i=0;i<button3.length;i++){
       button3[i].i=i+1;
       button3[i].onclick=function(){
@@ -744,7 +751,7 @@ function scrollslide(){
               Gdiv[i*2].style.opacity=0;
             }
           animove(Gdiv[(index-3)*2],{opacity:100},40);  
-          onbutton(groupA,index-3);
+          onbutton(button3,index-3);
         }
         else{
           var target=-move*(index-3);
@@ -756,12 +763,41 @@ function scrollslide(){
             }
             animove(Gdiv[(index-3)*2],{opacity:100},40);   
           }
-          onbutton(groupA,index-2);
+          onbutton(button3,index-2);
         }
-        
-
       }
-
+    }//group按钮点击
+    for(var i=0;i<button5.length;i++){
+      button5[i].i=i+1;
+      button5[i].onclick=function(){
+        index=17+this.i;
+        var target=-move2*(index-18);
+        animove(gallery,{left:-(index-18)*500},40);
+        animove(worksList,{left:target},40);
+        onbutton(button5,index-17);
+        for(var i=0;i<worksName.length;i++){
+              if (worksName[i].className='worksName on') {};
+              worksName[i].className="worksName";
+            }
+              worksName[index-18].className="worksName on";
+        if(index==21)  leau.style.width=180+'px';
+        else if(index==22)  leau.style.width=161+'px';
+        else if(index==23)  leau.style.width=221+'px';
+        else if(index==24)  leau.style.width=283+'px';
+        else if(index==25)  leau.style.width=218+'px';
+        else if(index==26)  leau.style.width=161+'px';
+        else if(index==27)  leau.style.width=174+'px';
+      }
+    }//work按钮点击
+    aboutA[0].onclick=function(){
+      index=28;
+      onbutton(aboutA,index-27);
+      animove(aboutW,{top:0},35)
+    }
+    aboutA[1].onclick=function(){
+      index=29;
+      onbutton(aboutA,index-27);
+      animove(aboutW,{top:-move},35)
     }
    //-----------------按钮点击完------------------
 
@@ -789,7 +825,7 @@ function scrollslide(){
             }
             animove(Gdiv[(index-4)*2],{opacity:100},40);   
           }
-        onbutton(groupA,index-2);
+        onbutton(button3,index-2);
         nu=1;
     }
     function groupIN(){
@@ -802,7 +838,7 @@ function scrollslide(){
             }
             animove(Gdiv[(index-3)*2],{opacity:100},40);   
           }
-      onbutton(groupA,index-2);
+      onbutton(button3,index-2);
        nu=1;
     }
 
