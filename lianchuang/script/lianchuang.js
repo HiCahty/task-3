@@ -167,7 +167,6 @@ function scrollslide(){
   //-------------------------------------------------------------------------------------------
 	var scrollFunc=function(e){ 
 		e=e || window.event; 
-    console.log(index);
     if(e.wheelDelta){//IE/Opera/Chrome 
       if(e.wheelDelta>0){//向上滚动事件
         if(index==28&&nu==1){
@@ -200,41 +199,39 @@ function scrollslide(){
             }
         
              nu=1;
-          }
+        }
         else if(index==9&&nu==1){
-             nu=0;
-            var time=setInterval(function(){
+          nu=0;
+          var time=setInterval(function(){
                 if(section[2].offsetTop>=0){
                   clearInterval(time);
                   section[2].style.top=0;
                 }
                 else section[2].style.top=section[2].offsetTop+20+'px';
-            },30);
+          },30);
              if(flagup[2]) index=flagup[2];
              else index=9;
              nu=1;
-          }
-          else if(index==3&&nu==1){
-             nu=0;
-            // var promise = new promise();
-            var time=setInterval(function(){
+        }
+        else if(index==3&&nu==1){
+          nu=0;
+          // var promise = new promise();
+          var time=setInterval(function(){
                 if(section[1].offsetTop>=0){
                   clearInterval(time);
                   section[1].style.top=0;
                 }
                 else section[1].style.top=section[1].offsetTop+20+'px';
-            },30);
+          },30);
 
             nu=1;
             //animove(Gdiv[0],{opacity:100},40);
           }//第二个幻灯片结束
-           else if(index==1&&nu==1){
-             nu=0;
+          else if(index==1&&nu==1){
             var time=setInterval(function(){
                 if(section[0].offsetTop>=0){
                   clearInterval(time);
                   section[0].style.top=0;
-                  nu=1;
                 }
                 else section[0].style.top=section[0].offsetTop+20+'px';
             },30);
@@ -255,7 +252,7 @@ function scrollslide(){
             if(index==21){
               leau.style.width=141+'px';
             }
-            if(index==22){
+            else if(index==22){
               leau.style.width=180+'px';
             }
             else if(index==23){
@@ -294,45 +291,44 @@ function scrollslide(){
                });
                onbutton(eventA,index-9);
              imgcontent[3].style.opacity=0;
-             animove(imgcontent[index-10],{opacity:100},20);
-             
-               nu=1;
+             animove(imgcontent[index-10],{opacity:100},20,function(){
+             });
             }
-            if(index==11){
+            else if(index==11){
                animove(round[index-9],{top:move},20,function(){
-                 animove(round[index-10],{top:parseInt(0.45*move)},20);
+                 animove(round[index-10],{top:parseInt(0.45*move)},20,function(){
+                 });
                });
                onbutton(eventA,index-9);
               imgcontent[2].style.opacity=0;
-             animove(imgcontent[index-10],{opacity:100},20);
-            
-               nu=1;
+             animove(imgcontent[index-10],{opacity:100},20);   
             }
-            if(index==10){
+            else if(index==10){
                animove(round[index-9],{top:move},20,function(){
                  animove(round[index-10],{top:parseInt(0.45*move)},20);
                });
                onbutton(eventA,index-9);
-               animove(imgcontent[1],{opacity:0},20,function(){
-             animove(imgcontent[index-10],{opacity:100},20);
-               });
-               nu=1;
+               imgcontent[1].style.opacity=0;
+               animove(imgcontent[index-10],{opacity:100},20);
+               // animove(imgcontent[1],{opacity:0},20,function(){
+                  
+               // });
             }
-            if(index==13){
-              nu=0;
-            animove(round[index-9],{top:move},20,function(){
-              animove(round[index-10],{top:parseInt(0.45*move)},20);
-            });
-            onbutton(eventA,index-9); 
+            else if(index==13){
+              imgcontent[2].style.opacity=0;
+              animove(round[index-9],{top:move},20,function(){
+                animove(round[index-10],{top:parseInt(0.45*move)},20);
+              });
+              onbutton(eventA,index-9); 
               animove(imgLR[0],{opacity:0},20,function(){
                 animove(imgLR[1],{opacity:0},20,function(){
-                  animove(imgcontent[index-10],{opacity:100},30);
+                  animove(imgcontent[index-10],{opacity:100},20);
                 })
               })
-              nu=1;
             }
+
             else if(index==14){
-              nu=0;
+              
               animove(round[index-9],{top:move},20,function(){
               animove(round[index-10],{top:parseInt(0.45*move)},20);
             });
@@ -344,10 +340,10 @@ function scrollslide(){
                   })
                 })
               })
-              nu=1;
+            
             }
             else if(index==15&&nu==1){
-              nu=0;
+          
               animove(round[index-9],{top:move},20,function(){
               animove(round[index-10],{top:parseInt(0.45*move)},20);
             });
@@ -373,10 +369,9 @@ function scrollslide(){
                   })
                 })
               })
-               nu=1;
-            }
+                        }
             else if(index==16&&nu==1){
-              nu=0;
+         
               animove(round[index-9],{top:move},20,function(){
               animove(round[index-10],{top:parseInt(0.45*move)},20);
             });
@@ -404,10 +399,10 @@ function scrollslide(){
                   })
                 })
               })
-              nu=1;
+          
             }
             else if(index==17&&nu==1){
-              nu=0;
+         
               animove(round[index-9],{top:move},20,function(){
               animove(round[index-10],{top:parseInt(0.45*move)},20);
             });
@@ -446,14 +441,17 @@ function scrollslide(){
           else if(index<=0&&nu==1) {index=1;}
         if(nu==1){
           index--;
-          console.log(index);
+          console.log("向上"+index);
         }
         else{
           console.log(nu+'!');
         }
       }
+
+
     	if(e.wheelDelta<0) {//向下滚动事件
           if(nu==1){index++;}
+          console.log("向下"+index);
     		  if(index==1&&nu==1){
             nu=0;
     				var time=setInterval(function(){
@@ -683,27 +681,7 @@ function scrollslide(){
               worksName[index-18].className="worksName on";
             onbutton(workA,index-17);
             //index一一取值只为改变卷帘位置
-            if(index==21){
-              leau.style.width=180+'px';
-            }
-            else if(index==22){
-               leau.style.width=161+'px';
-            }
-            else if(index==23){
-               leau.style.width=221+'px';
-            }
-            else if(index==24){
-               leau.style.width=283+'px';
-            }
-            else if(index==25){
-               leau.style.width=218+'px';
-            }
-            else if(index==26){
-               leau.style.width=161+'px';
-            }
-            else if(index==27){
-               leau.style.width=174+'px';
-            }
+           Inscroll.inwork(index,leau);
           }
           else if(index==29&&nu==1){
             nu=0;
@@ -780,13 +758,7 @@ function scrollslide(){
               worksName[i].className="worksName";
             }
               worksName[index-18].className="worksName on";
-        if(index==21)  leau.style.width=180+'px';
-        else if(index==22)  leau.style.width=161+'px';
-        else if(index==23)  leau.style.width=221+'px';
-        else if(index==24)  leau.style.width=283+'px';
-        else if(index==25)  leau.style.width=218+'px';
-        else if(index==26)  leau.style.width=161+'px';
-        else if(index==27)  leau.style.width=174+'px';
+       Inscroll.inwork(index,leau);
       }
     }//work按钮点击
     aboutA[0].onclick=function(){
@@ -816,16 +788,16 @@ function scrollslide(){
             nu=1;
     }
      function groupINup(){
-      var target=-move*(index-3);
+      var target=-move*(index-4);
         animove(imgslide,{top:target},40);
           if(Gdiv[index-3].getElementsByTagName('div')){
-            animove(Gdiv[(index-4)*2],{opacity:0},40);
+            animove(Gdiv[(index-3)*2],{opacity:0},40);
             for(var i=0;i<6;i++){
               Gdiv[i*2].style.opacity=0;
             }
             animove(Gdiv[(index-4)*2],{opacity:100},40);   
           }
-        onbutton(button3,index-2);
+        onbutton(button3,index-3);
         nu=1;
     }
     function groupIN(){
